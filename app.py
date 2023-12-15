@@ -1,4 +1,5 @@
 from flask import Flask,redirect,url_for,render_template,request
+from dotenv import load_dotenv
 
 app=Flask(__name__)
 @app.route('/',methods=['GET','POST'])
@@ -7,45 +8,69 @@ def home():
         # Handle POST Request here
         return render_template('index.html')
     return render_template('index.html')
-@app.route('/login')
-def login():
+@app.route('/login_admin')
+def login_admin():
     return render_template("login_admin.html")
 
-@app.route("/sign_in", methods=["POST"])
-def sign_in():
-    # Sign in
-    username_receive = request.form["username_give"]
-    password_receive = request.form["password_give"]
-    pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
-    result = db.users.find_one(
-        {
-            "username": username_receive,
-            "password": pw_hash,
-        }
-    )
-    if result:
-        payload = {
-            "id": username_receive,
-            # the token will be valid for 24 hours
-            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
-        }
-        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+@app.route('/login_user')
+def login_user():
+    return render_template("login_user.html")
+    
+@app.route('/register')
+def register():
+    return render_template("register.html")
 
-        return jsonify(
-            {
-                "result": "success",
-                "token": token,
-            }
-        )
-    # Let's also handle the case where the id and
-    # password combination cannot be found
-    else:
-        return jsonify(
-            {
-                "result": "fail",
-                "msg": "We could not find a user with that id/password combination",
-            }
-        )
+@app.route('/heroes')
+def heroes():
+    return render_template("heroes.html")
+
+@app.route('/hero_story')
+def hero_story():
+    return render_template("hero_story.html")
+
+@app.route('/skin')
+def skin():
+    return render_template("skin.html")
+
+@app.route('/jungle')
+def jungle():
+    return render_template("jungle.html")
+
+@app.route('/maps')
+def maps():
+    return render_template("interactive_.html")
+
+@app.route('/discussion')
+def discussion():
+    return render_template("discussion.html")
+
+@app.route('/discussion_reply')
+def reply():
+    return render_template("discussion_reply.html")
+
+@app.route('/mypost')
+def mypost():
+    return render_template("mypost.html")
+
+@app.route('/dahboard_discussion')
+def dashboard_discussion():
+    return render_template("dashboard_discussion.html")
+
+@app.route('/dahboard_content')
+def dashboard_content():
+    return render_template("dashboard_content_heroes.html")
+
+@app.route('/dahboard_heroes')
+def dashboard_heroes():
+    return render_template("dashboard_heroes.html")
+
+@app.route('/dahboard_story')
+def dashboard_story():
+    return render_template("dashboard_hero_story.html")
+
+
+
+
 
 if __name__ == '__main__':
     #DEBUG is SET to TRUE. CHANGE FOR PROD
