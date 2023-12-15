@@ -159,3 +159,12 @@ body {
   height: 100px;
   border-radius: 5px;
 }
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
