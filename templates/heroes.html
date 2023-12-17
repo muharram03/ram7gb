@@ -1,39 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <nav class="navbar navbar bg-primary navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">ML Playbook</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Discussion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Story</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Interactive Maps</a>
-          </li>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ML Playbook</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Discussion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Story</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Interactive Maps</a>
+        </li>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    align-items: center;
+  }
+
+  th, td, tr {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+
+      body {
+      background-color: #001f3f;
+      color: white;
+      margin: 0;
+      padding: 0; 
+    }
+</style>
+
 <body>
-    
+  <div class="container mt-3">
+    <div>
+      <h2><span class="mw-headline">List Heroes</span><span class="mw-editsection">
+        </span></h2>
+    </div>
+    <p>Ini adalah daftar dari hero mobile legend.</p>
+
+    <div>
+      <table class="tabel table-bordered wide-inner">
+        <thead>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Icon</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Hero</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Role(s)</th>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><a href="/wiki/Miya" title="Miya"><img alt="Hero011-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/8/8c/Hero011-icon.png/revision/latest?cb=20230826054932"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero011-icon.png"
+                  data-image-key="Hero011-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/8/8c/Hero011-icon.png/revision/latest?cb=20230826054932"
+                  class=" lazyloaded"></a></td>
+            <td><b>Miya,</b> the Moonlight Archer</td>
+            <td><a>Marksman</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Tigreal" title="Tigreal"><img alt="Hero061-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/f/f2/Hero061-icon.png/revision/latest?cb=20220116062834"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero061-icon.png"
+                  data-image-key="Hero061-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/f/f2/Hero061-icon.png/revision/latest?cb=20220116062834"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Tigreal,</b> the Warrior of Dawn</td>
+            <td><a>Tank</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Chou" title="Chou"><img alt="Hero261-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/a/a9/Hero261-icon.png/revision/latest?cb=20220116063230"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero261-icon.png"
+                  data-image-key="Hero261-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/a/a9/Hero261-icon.png/revision/latest?cb=20220116063230"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Chou,</b> the Kung Fu Boy</td>
+            <td><a>Fighter</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Saber" title="Saber"><img alt="Hero031-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/8/87/Hero031-icon.png/revision/latest?cb=20220116062841"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero031-icon.png"
+                  data-image-key="Hero031-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/8/87/Hero031-icon.png/revision/latest?cb=20220116062841"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Saber,</b> the Wandering Sword</td>
+            <td><a>Assassin</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Gord" title="Gord"><img alt="Hero231-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/2/27/Hero231-icon.png/revision/latest?cb=20220116062838"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero231-icon.png"
+                  data-image-key="Hero231-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/2/27/Hero231-icon.png/revision/latest?cb=20220116062838"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Gord,</b> the Professor of the Mystic</td>
+            <td><a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Estes" title="Estes"><img alt="Hero341-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/9/92/Hero341-icon.png/revision/latest?cb=20220116063228"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero341-icon.png"
+                  data-image-key="Hero341-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/9/92/Hero341-icon.png/revision/latest?cb=20220116063228"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Estes,</b> the Moon Elf King</td>
+            <td><a>Support</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Zilong" title="Zilong"><img alt="Hero161-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/5/5f/Hero161-icon.png/revision/latest?cb=20220116063126"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero161-icon.png"
+                  data-image-key="Hero161-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/5/5f/Hero161-icon.png/revision/latest?cb=20220116063126"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Zilong,</b> the Spear of Dragon</td>
+            <td><a>Fighter</a>/<a>Assassin</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Johnson" title="Johnson"><img alt="Hero321-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/7/73/Hero321-icon.png/revision/latest?cb=20230826054938"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero321-icon.png"
+                  data-image-key="Hero321-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/7/73/Hero321-icon.png/revision/latest?cb=20230826054938"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Johnson,</b> the Wild Engine</td>
+            <td><a>Tank</a>/<a>Support</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Hilda" title="Hilda"><img alt="Hero351-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/1/11/Hero351-icon.png/revision/latest?cb=20220116062845"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero351-icon.png"
+                  data-image-key="Hero351-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/1/11/Hero351-icon.png/revision/latest?cb=20220116062845"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Hilda</b></td>
+            <td><a>Fighter</a>/<a>Tank</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Roger" title="Roger"><img alt="Hero391-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/9/97/Hero391-icon.png/revision/latest?cb=20220116063130"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero391-icon.png"
+                  data-image-key="Hero391-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/9/97/Hero391-icon.png/revision/latest?cb=20220116063130"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Roger,</b> the Dire Wolf Hunter</td>
+            <td><a>Fighter</a>/<a>Marksman</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Harley" title="Harley"><img alt="Hero421-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/9/92/Hero421-icon.png/revision/latest?cb=20220116063215"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero421-icon.png"
+                  data-image-key="Hero421-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/9/92/Hero421-icon.png/revision/latest?cb=20220116063215"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Harley,</b> the Mage Genius</td>
+            <td><a>Assassin</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Selena" title="Selena"><img alt="Hero631-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/d/d4/Hero631-icon.png/revision/latest?cb=20220116063024"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero631-icon.png"
+                  data-image-key="Hero631-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/d/d4/Hero631-icon.png/revision/latest?cb=20220116063024"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Selena,</b> the Abyssal Witch</td>
+            <td><a>Assassin</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Kimmy" title="Kimmy"><img alt="Hero711-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/1/15/Hero711-icon.png/revision/latest?cb=20220116063010"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero711-icon.png"
+                  data-image-key="Hero711-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/1/15/Hero711-icon.png/revision/latest?cb=20220116063010"
+                  class=" lazyloaded"></a></td>
+            <td><b>Kimmy,</b> the Jetpack Rebel</td>
+            <td><a>Marksman</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Faramis" title="Faramis"><img alt="Hero761-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/3/34/Hero761-icon.png/revision/latest?cb=20220604033636"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero761-icon.png"
+                  data-image-key="Hero761-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/3/34/Hero761-icon.png/revision/latest?cb=20220604033636"
+                  class=" lazyloaded"></a></td>
+            <td><b>Faramis,</b> the Soul Binder</td>
+            <td><a>Support</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Esmeralda" title="Esmeralda"><img alt="Hero811-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/8/88/Hero811-icon.png/revision/latest?cb=20220116063033"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero811-icon.png"
+                  data-image-key="Hero811-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/8/88/Hero811-icon.png/revision/latest?cb=20220116063033"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Esmeralda,</b> the Astrologer</td>
+            <td><a>Mage</a>/<a>Tank</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
+
 </html>
