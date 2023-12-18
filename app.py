@@ -61,51 +61,210 @@ def register():
 
 @app.route('/heroes')
 def heroes():
-    return render_template("heroes.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("heroes.html" , active_page='heroes',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/hero_story',methods=['GET'])
 def hero_story():
-    return render_template("hero_story.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("hero_story.html" , active_page='hero_story',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/skin')
 def skin():
-    return render_template("skin.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("skin.html" , active_page='skin',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/jungle')
 def jungle():
-    return render_template("jungle.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("jungle.html" , active_page='jungle',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
-@app.route('/maps')
+@app.route('/interactive_maps')
 def maps():
-    return render_template("interactive_.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("interactive_maps.html" , active_page='interactive_maps',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/discussion')
 def discussion():
-    return render_template("discussion.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("discussion.html" , active_page='discussion',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/discussion_reply')
 def reply():
-    return render_template("discussion_reply.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("skin.html" , active_page='skin',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/mypost')
 def mypost():
-    return render_template("mypost.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("skin.html" , active_page='skin',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/dahboard_discussion')
 def dashboard_discussion():
-    return render_template("dashboard_discussion.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("dashboard_content.html" , active_page='dashboard_content',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/dahboard_content')
 def dashboard_content():
-    return render_template("dashboard_content_heroes.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("dashboard_content.html" , active_page='dashboard_content',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/dahboard_heroes')
 def dashboard_heroes():
-    return render_template("dashboard_heroes.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("dashboard_heroes.html" , active_page='dashboard_heroes',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 @app.route('/dahboard_story')
 def dashboard_story():
-    return render_template("dashboard_hero_story.html")
+    token_receive = request.cookies.get(TOKEN_KEY)
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        if 'admin' in payload:
+            return render_template("dashboard_story.html", user_info=payload)
+        else:
+            return redirect(url_for('/home', msg='You are not admin'))
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -153,6 +312,7 @@ def sign_up():
         "username": username_receive,                               # id
         "email" : email_recive,                                     # email
         "password": password_hash,                                  # password
+        "roles":"user"
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})
