@@ -29,26 +29,35 @@ client = MongoClient(MONGODB_URI)
 
 db = client[DB_NAME]
 
-@app.route('/',methods=['GET','POST'])
+@app.route('/')
+def main():
+    return render_template("index.html" , active_page='home')
+
+@app.route('/home')
 def home():
-    if request.method=='POST':
-        # Handle POST Request here
-        return render_template('index.html')
-    return render_template('index.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        return render_template("home.html" , active_page='home',user_info=payload,)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 
-@app.route('/login_admin',methods=['GET','POST'])
-def login_admin():
-    return render_template("login_admin.html")
-
-@app.route("/login_user",methods=['GET','POST'])
-def login_user():
-    msg = request.args.get("msg")
-    return render_template("login_user.html", msg=msg)
+@app.route('/login')
+def login():
+    return render_template("login.html")
     
-@app.route('/register',methods=['GET','POST'])
+@app.route('/register')
 def register():
-    return render_template("register.html")
+    return render_template("register.html" )
 
 @app.route('/heroes')
 def heroes():
@@ -97,9 +106,80 @@ def dashboard_heroes():
 @app.route('/dahboard_story')
 def dashboard_story():
     return render_template("dashboard_hero_story.html")
-@app.route("/home")
-def home1():
-    return render_template("home.html")
+
+
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    email_receive = request.form["username_give"]
+    password_receive = request.form["password_give"]
+    pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+    result = db.users.find_one({
+            "email": email_receive,
+            "password": pw_hash,
+        })
+    if result and 'admin' in result:
+        payload = {
+            "id": email_receive,
+            "username": result['username'],
+            "admin":True,
+            # the token will be valid for 24 hours
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+        return jsonify({"result": "success", "token": token,})
+    elif result and 'admin' not in result:
+        payload = {
+            "id": email_receive,
+            "username": result['username'],
+            # the token will be valid for 24 hours
+            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+        return jsonify({"result": "success", "token": token,})
+        
+    # Let's also handle the case where the id and
+    # password combination cannot be found
+    else:
+        return jsonify({"result": "fail","msg": "We could not find a user with that id/password combination",
+            })
+    
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up():
+    username_receive = request.form.get('username_give')
+    email_recive = request.form.get('email_give')
+    password_receive = request.form.get('password_give')
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    doc = {
+        "username": username_receive,                               # id
+        "email" : email_recive,                                     # email
+        "password": password_hash,                                  # password
+    }
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
+
+@app.route('/sign_up/check_dup', methods=['POST'])
+def check_dup():
+    username_receive = request.form.get('username_give')
+    exists = bool(db.users.find_one({"email": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists})
+
+@app.route('/profile/<keyword>')
+def profile(keyword):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        
+        return render_template("profile.html" ,user_info=payload)
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
 
 
 
