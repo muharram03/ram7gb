@@ -1,39 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <nav class="navbar navbar bg-primary navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">ML Playbook</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Discussion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Story</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Interactive Maps</a>
-          </li>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">ML Playbook</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Discussion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Story</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Interactive Maps</a>
+        </li>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    align-items: center;
+  }
+
+  th,
+  tr {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+
+  td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: left;
+  }
+
+  body {
+    background-color: #001f3f;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+
+
 <body>
-   
+  <div class="container mt-3">
+    <div>
+      <h1 class="page-header__title" id="firstHeading">
+        <span class="mw-page-title-main">List of Heroes</span>
+      </h1>
+      <p>Berisi cerita latar belakang atau cerita kehidupan dari tiap-tiap hero pada game Mobile Legends Bang-Bang.</p>
+    </div>
+
+    <div>
+      <table class="tabel table-bordered wide-inner">
+        <thead>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Icon</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Hero</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Story</th>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><a href="/wiki/Chou" title="Chou"><img alt="Hero261-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/a/a9/Hero261-icon.png/revision/latest?cb=20220116063230"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero261-icon.png"
+                  data-image-key="Hero261-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/a/a9/Hero261-icon.png/revision/latest?cb=20220116063230"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Chou,</b> the Kung Fu Boy</td>
+            <td>
+              <p>Chou lahir di daerah kumuh kecil terpencil di Antoinerei, menjalani kehidupan dengan kualitas paling
+                rendah. Meski begitu, lingkungan hidup yang keras tidak pernah menghilangkan kebaikan di hati Chou. Dia
+                merawat orang tua dan anak di bawah umur di daerah kumuh, dengan penuh semangat. Namun, dengan
+                meningkatnya gejolak dan ketidakstabilan di Land of Dawn, situasi di luar pada akhirnya berdampak pada
+                perkampungan kumuh yang terisolasi ini. Pada suatu kesempatan, Chou menyelamatkan seorang biksu tua yang
+                dikejar massa. Dia membawanya kembali ke daerah kumuh dan merawatnya. Sebagai imbalannya, biksu tua itu
+                memberikan keterampilan Kung-Fu Asia kuno kepada Chou dan mengatakan kepadanya bahwa dunia membutuhkan
+                pahlawan sejati untuk bangkit dan mengakhiri kekacauan. Setelah menyelesaikan masa magangnya, Chou
+                bersumpah di hadapan biksu tua itu bahwa dia akan menjadi pahlawan sejati. Kemudian, dia memulai
+                perjalanannya ke pusat Land of Dawn bahkan tanpa menoleh ke belakang sekalipun. Menuju siluet Chou di
+                kejauhan, biksu tua itu mengangguk, dan pergi.</p>
+
+              <p>Sejak Chou menginjakkan kaki di Land of Dawn, dia menemukan bahwa tanah ini dipenuhi oleh orang-orang
+                kuat. Dia segera mendapat banyak musuh, karena masa mudanya dan kecerobohannya, tapi dia juga mendapat
+                beberapa teman. Salah satunya adalah Lancelot yang selalu mengatakan bahwa Chou memiliki selera pakaian
+                yang paling buruk. Setelah terus menerus mengeluh, Chou akhirnya mengganti pakaiannya dengan gaya yang
+                benar-benar berbeda. Senang dengan gaya barunya, Chou berkelana lebih jauh ke Land of Dawn, bertujuan
+                untuk menghilangkan penderitaan.</p>
+            </td>
+          </tr>
+
+          <tr>
+            <td><a href="/wiki/Gord" title="Gord"><img alt="Hero231-icon"
+                  src="https://static.wikia.nocookie.net/mobile-legends/images/2/27/Hero231-icon.png/revision/latest?cb=20220116062838"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero231-icon.png"
+                  data-image-key="Hero231-icon.png" data-relevant="0"
+                  data-src="https://static.wikia.nocookie.net/mobile-legends/images/2/27/Hero231-icon.png/revision/latest?cb=20220116062838"
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Gord,</b> the Professor of the Mystic</td>
+            <td>
+              <p>Gord selalu menjadi bukti nyata keunggulan di akademi Sihir. Ia dilahirkan di dunia sihir, dengan
+                bakat memanipulasi kekuatan mistik semudah menghirup udara. Kecintaannya pada sihir mistik sangat kuat,
+                yang memungkinkan dia menguasai beberapa mantra mistik yang canggih dan mendalam pada usia dini. Tapi
+                ini jelas merupakan pedang bermata dua, karena seiring bertambahnya usia Gord, ketergantungannya pada
+                sihir mistik semakin berkurang, membuatnya semakin sombong seiring berjalannya waktu. Suatu kali dia
+                menemukan buku Elemental di bagian terlarang Akademi. Buku misterius tersebut mencatat metode untuk
+                menempa keberadaan sihir mistik murni dari tubuh manusia menggunakan kekuatan mistik.
+              </p>
+              <p>Penyihir muda itu mengubur dirinya di dalam buku dan memulai studinya tanpa menghargai pendapat dari
+                luar. Ini berhasil dengan sukses pada awalnya, energi mistik murni mulai mengalir melalui pembuluh darah
+                Gord, sehingga memungkinkan dia untuk mengeluarkan mantra yang lebih kuat lagi. Sayangnya, Gord tidak
+                mampu mengendalikan kekuatan ini dan ia segera kewalahan dengan energi mistis ini. Gord kemudian mencoba
+                mencari solusi dari sumber sihir Kuno. Dengan kombinasi dua energi berbeda, lambang mistis itu meresap
+                ke dalam kulit dan tulang Gord, mengubah penampilannya dan membuatnya nyaris hancur. Berkat bantuan dari
+                Elward, sang kepala penyihir, turbulensi di tubuhnya akhirnya bisa dikendalikan. Selanjutnya Elward
+                memisahkan kedua energi mistis tersebut dari tubuh Gord. Namun, kejadian ini memberikan dampak yang
+                sangat besar pada Gord, meninggalkan tubuhnya yang setengah berwarna magenta dan setengah biru serta
+                menghilangkan sihir misterius murni yang sangat ia rindukan. Saat dia diselamatkan, Gord berkecil hati
+                karena dia tidak pernah bisa lagi mengendalikan atau menggunakan sihir yang terkandung dalam energi
+                mistik murni.
+              </p>
+              <p>Namun, Elward menyemangati Gord untuk akhirnya bangkit kembali. Elward kemudian mengajak Gord untuk
+                melanjutkan karirnya sebagai penyihir dan melamarnya untuk mengajar di akademi. Setelah mempertimbangkan
+                dengan cermat, Gord menerima tawaran tersebut karena ia sangat ingin menemukan siswa yang dapat
+                melanjutkan studinya, tanpa melakukan kesalahan yang sama seperti yang ia lakukan. Sejak hari itu, Gord
+                memulai hidup baru sebagai profesor paling ketat dan paling ahli di akademi Sihir Ursula.</p>
+            </td>
+
+          </tr>
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
 </body>
+
 </html>
