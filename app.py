@@ -17,7 +17,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config["UPLOAD_FOLDER"] = "./static/profile_pics"
 
 SECRET_KEY = "SPARTA"
-
+TOKEN_KEY = 'mytoken'
 
 
 
@@ -35,7 +35,7 @@ def main():
 
 @app.route('/home')
 def home():
-    token_receive = request.cookies.get('mytoken')
+    token_receive = request.cookies.get(TOKEN_KEY)
     try:
         payload = jwt.decode(
             token_receive,
@@ -165,7 +165,7 @@ def check_dup():
 
 @app.route('/profile/<keyword>')
 def profile(keyword):
-    token_receive = request.cookies.get("mytoken")
+    token_receive = request.cookies.get(TOKEN_KEY)
     try:
         payload = jwt.decode(
             token_receive,
