@@ -275,9 +275,10 @@ def sign_in():
     pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
 
     result = db.users.find_one({
-        "email": email_receive,
-        "password": pw_hash,
-    })
+    "email": email_receive,
+    "password": pw_hash,
+})
+    print(result)
 
     if result:
         payload = {
@@ -291,7 +292,7 @@ def sign_in():
 
            
             token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-
+            print(token)
             # Arahkan ke halaman dashboard jika admin berhasil login
             return redirect(url_for('dashboard_hero_story'))
 
@@ -341,7 +342,7 @@ def profile(keyword):
     
 @app.route("/posting", methods=["POST"])
 def posting():
-    token_receive = request.cookies.get("mytoken")
+    token_receive = request.cookies.get(TOKEN_KEY)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
         print(payload)
@@ -361,7 +362,7 @@ def posting():
 
 @app.route("/get_posts", methods=["GET"])
 def get_posts():
-    token_receive = request.cookies.get("mytoken")
+    token_receive = request.cookies.get(TOKEN_KEY)
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
 
