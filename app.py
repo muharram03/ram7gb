@@ -161,6 +161,7 @@ def discussion():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
+
 @app.route('/discussion_reply')
 def reply():
     token_receive = request.cookies.get(TOKEN_KEY)
@@ -258,7 +259,7 @@ def dashboard_story():
         if 'admin' in payload:
             return render_template("dashboard_hero_story.html", user_info=payload)
         else:
-            return redirect(url_for('/home', msg='You are not admin'))
+            return redirect(url_for('home', msg='You are not admin'))
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
         return redirect(url_for('login', msg=msg))
@@ -329,7 +330,6 @@ def profile(keyword):
             SECRET_KEY,
             algorithms=['HS256']
         )
-        
         return render_template("profile.html" ,user_info=payload)
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
@@ -337,6 +337,80 @@ def profile(keyword):
     except jwt.exceptions.DecodeError:
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
+    
+    
+@app.route("/posting", methods=["POST"])
+def posting():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        print(payload)
+        # We should create a new post here
+        user_info = db.users.find_one({"username": payload["username"]})
+        comment_receive = request.form["comment_give"]
+        date_receive = request.form["date_give"]
+        doc = {
+            "username": user_info["username"],
+            "comment": comment_receive,
+            "date": date_receive,
+        }
+        db.posts.insert_one(doc)
+        return jsonify({"result": "success", "msg": "Posting successful!"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+@app.route("/get_posts", methods=["GET"])
+def get_posts():
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+
+        username_receive = request.args.get("username_give")
+        if username_receive == "":
+            posts = list(db.posts.find({}).sort("date", -1).limit(20))
+        else:
+            posts = list(
+                db.posts.find({"username": username_receive}).sort("date", -1).limit(20)
+            )
+
+        for post in posts:
+            post["_id"] = str(post["_id"])
+            post["count_heart"] = db.likes.count_documents(
+                {"post_id": post["_id"], "type": "heart"}
+            )
+            post["count_star"] = db.likes.count_documents(
+                {"post_id": post["_id"], "type": "star"}
+            )            
+            post["count_thumbsup"] = db.likes.count_documents(
+                {"post_id": post["_id"], "type": "thumbsup"}
+            )            
+            
+            post["heart_by_me"] = bool(
+                db.likes.find_one(
+                    {"post_id": post["_id"], "type": "heart", "username": payload["id"]}
+                )
+            )
+            post["star_by_me"] = bool(
+                db.likes.find_one(
+                    {"post_id": post["_id"], "type": "star", "username": payload["id"]}
+                )
+            )
+            post["thumbsup_by_me"] = bool(
+                db.likes.find_one(
+                    {"post_id": post["_id"], "type": "thumbsup", "username": payload["id"]}
+                )
+            )
+
+        return jsonify(
+            {
+                "result": "success",
+                "msg": "Successful fetched all posts",
+                "posts": posts,
+            }
+        )
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
 
 
 
