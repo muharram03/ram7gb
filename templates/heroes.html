@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<nav class="navbar navbar bg-primary navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">ML Playbook</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse px-5" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="{{ 'nav-link active' if active_page == 'home' else 'nav-link' }} active" aria-current="page" href="/home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="{{ 'nav-link active' if active_page == 'discussion' else 'nav-link' }}" href="/discussion">Discussion</a>
+        </li>
+        <li class="nav-item">
+            <a class="{{ 'nav-link active' if active_page == 'hero_story' else 'nav-link' }}" href="/hero_story">Story</a>
+        </li>
+        <li class="nav-item">
+            <a class="{{ 'nav-link active' if active_page == 'interactive_maps' else 'nav-link' }}" href="/interactive_maps">Interactive Maps</a>
+        </li>
+        </li>
+    </ul>
+      {% if user_info.exp %}
+      <div class="flex-shrink-0 dropdown">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
+          data-bs-toggle="dropdown" aria-expanded="true">
+          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow "
+          style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
+          data-popper-placement="bottom-end">
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#" onclick="sign_out()">Sign out</a></li>
+          <li><a class="dropdown-item" href="#" onclick="mypost()"></a></li>
+        </ul>
+      </div>
+      {% else %}
+      <button class="btn btn-outline-info" type="button" onclick="location.href='/login'">Login</button>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    align-items: center;
+  }
+
+  th,
+  td,
+  tr {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+
+  body {
+    background-color: #001f3f;
+    color: white;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<script>
+  function sign_out() {
+    $.removeCookie("mytoken", {
+      path: "/"
+    });
+    alert("Signed out!");
+    window.location.href = "/login";
+  }
+</script>
+
+<body>
+  <div class="container mt-3">
+    <div>
+      <h1 class="page-header__title" id="firstHeading">
+        <span class="mw-page-title-main">List of Heroes</span>
+      </h1>
+      <p>Daftar ini menunjukkan semua Hero yang tersedia di kedua server, bersama dengan peran yang ditetapkan. Hero
+        yang belum mendapatkan harga beli atau rekomendasi laning adalah hero yang masih belum tersedia di Official
+        Server atau saat test di Advanced Server.
+      </p>
+    </div>
+
+    <div>
+      <table class="tabel table-bordered wide-inner">
+        <thead>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Icon</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Hero</th>
+          <th class="headerSort" tabindex="0" role="columnheader button" title="Sort ascending">Role(s)</th>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><a href="" title="Miya"><img alt="Hero011-icon"
+                  src="/static/miya.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero011-icon.png"
+                  data-image-key="Hero011-icon.png" data-relevant="0"
+                  data-src="""
+                  class=" lazyloaded"></a></td>
+            <td><b>Miya,</b> the Moonlight Archer</td>
+            <td><a>Marksman</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Tigreal"><img alt="Hero061-icon"
+                  src="/static/tigreal"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero061-icon.png"
+                  data-image-key="Hero061-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Tigreal,</b> the Warrior of Dawn</td>
+            <td><a>Tank</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Chou"><img alt="Hero261-icon"
+                  src="/static/chou.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero261-icon.png"
+                  data-image-key="Hero261-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Chou,</b> the Kung Fu Boy</td>
+            <td><a>Fighter</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="/" title="Saber"><img alt="Hero031-icon"
+                  src="/static/saber.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero031-icon.png"
+                  data-image-key="Hero031-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Saber,</b> the Wandering Sword</td>
+            <td><a>Assassin</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Gord"><img alt="Hero231-icon"
+                  src="/static/gord.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero231-icon.png"
+                  data-image-key="Hero231-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Gord,</b> the Professor of the Mystic</td>
+            <td><a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Estes"><img alt="Hero341-icon"
+                  src="/static/estes.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero341-icon.png"
+                  data-image-key="Hero341-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Estes,</b> the Moon Elf King</td>
+            <td><a>Support</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Zilong"><img alt="Hero161-icon"
+                  src="/static/zilong.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero161-icon.png"
+                  data-image-key="Hero161-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Zilong,</b> the Spear of Dragon</td>
+            <td><a>Fighter</a>/<a>Assassin</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Johnson"><img alt="Hero321-icon"
+                  src="/static/johnson.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero321-icon.png"
+                  data-image-key="Hero321-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Johnson,</b> the Wild Engine</td>
+            <td><a>Tank</a>/<a>Support</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Hilda"><img alt="Hero351-icon"
+                  src="/static/hilda.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero351-icon.png"
+                  data-image-key="Hero351-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Hilda</b></td>
+            <td><a>Fighter</a>/<a>Tank</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Roger"><img alt="Hero391-icon"
+                  src="/static/roger.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero391-icon.png"
+                  data-image-key="Hero391-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Roger,</b> the Dire Wolf Hunter</td>
+            <td><a>Fighter</a>/<a>Marksman</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Harley"><img alt="Hero421-icon"
+                  src="/static/harley.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero421-icon.png"
+                  data-image-key="Hero421-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Harley,</b> the Mage Genius</td>
+            <td><a>Assassin</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Selena"><img alt="Hero631-icon"
+                  src="/static/selena.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero631-icon.png"
+                  data-image-key="Hero631-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Selena,</b> the Abyssal Witch</td>
+            <td><a>Assassin</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Kimmy"><img alt="Hero711-icon"
+                  src="/static/kimmy.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero711-icon.png"
+                  data-image-key="Hero711-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" lazyloaded"></a></td>
+            <td><b>Kimmy,</b> the Jetpack Rebel</td>
+            <td><a>Marksman</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Faramis"><img alt="Hero761-icon"
+                  src="/static/faramis.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero761-icon.png"
+                  data-image-key="Hero761-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" lazyloaded"></a></td>
+            <td><b>Faramis,</b> the Soul Binder</td>
+            <td><a>Support</a>/<a>Mage</a></td>
+          </tr>
+
+          <tr>
+            <td><a href="" title="Esmeralda"><img alt="Hero811-icon"
+                  src="/static/esmeralda.webp"
+                  decoding="async" loading="lazy" width="100" height="100" data-image-name="Hero811-icon.png"
+                  data-image-key="Hero811-icon.png" data-relevant="0"
+                  data-src=""
+                  class=" ls-is-cached lazyloaded"></a></td>
+            <td><b>Esmeralda,</b> the Astrologer</td>
+            <td><a>Mage</a>/<a>Tank</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</body>
+<footer class="bg-dark text-white text-center py-3">
+  <div class="container">
+    <p>&copy; 2023 ML Playbook. All rights reserved.</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
+
+</html>

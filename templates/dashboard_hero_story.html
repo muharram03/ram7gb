@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ML Playbook</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<script>
+  function sign_out() {
+    $.removeCookie("mytoken", {
+      path: "/"
+    });
+    alert("Signed out!");
+    window.location.href = "/login";
+  }
+</script>
+
+<body>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+      <div class="bg-dark col-auto col-md-4 col-lg-3 min-vh-100 d-flex flex-column justify-content-between">
+        <div class="bg-dark p-2">
+          <a class="d-flex text-decoration-none mt-1 align-items-center text-white">
+            <li class="nav-item">
+              <a class="{{ 'nav-link active' if active_page == 'dashboard_admin' else 'nav-link' }}"
+                href="/dashboard_admin">Admin Dashboard</a>
+            </li>
+
+          </a>
+          <ul class="nva-pills flex-column mt-lg-5">
+
+            <li class="nav-item py-2 py-sm-0">
+              <a href="/dashboard_heroes" class="nav-link text-white">
+                <i class="fs-5"></i><span class="fs-4 ms-3 d-none d-sm-inline">Heroes</span>
+              </a>
+            </li>
+            <li class="nav-item py-2 py-sm-0">
+              <a href="/dashboard_hero_story" class="nav-link text-white">
+                <i class="fs-5"></i><span class="fs-4 ms-3 d-none d-sm-inline">Hero Story</span>
+              </a>
+            </li>
+            <li class="nav-item py-2 py-sm-0">
+              <a href="/dashboard_discussion" class="nav-link text-white">
+                <i class="fs-5"></i><span class="fs-4 ms-3 d-none d-sm-inline">Discussion</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+        </ul>
+        {% if user_info.exp %}
+        <div class="flex-shrink-0 dropdown">
+          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
+            data-bs-toggle="dropdown" aria-expanded="true">
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>
+          <ul class="dropdown-menu text-small shadow "
+            style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
+            data-popper-placement="bottom-end">
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="#" onclick="sign_out()">Sign out</a></li>
+          </ul>
+        </div>
+        {% else %}
+        <button class="btn btn-outline-success" type="button" onclick="location.href='/login'">Login</button>
+        {% endif %}
+      </div>
+
+    </div>
+    <div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-iOqVpG6C9zzKx2ck+5M3/cLwYUVsC9fN2N3F4MjM3g2xeg3NT+YF0zf47Y1u5KlN" crossorigin="anonymous">
+  </script>
+</body>
+<footer class="bg-dark text-white text-center py-3">
+  <div class="container">
+    <p>&copy; 2023 ML Playbook. All rights reserved.</p>
+  </div>
+</footer>
+
+</html>
