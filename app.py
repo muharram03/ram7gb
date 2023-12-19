@@ -195,7 +195,7 @@ def mypost():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
-@app.route('/dahboard_discussion')
+@app.route('/dashboard_discussion')
 def dashboard_discussion():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -212,7 +212,7 @@ def dashboard_discussion():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
-@app.route('/dahboard_content')
+@app.route('/dashboard_content')
 def dashboard_content():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -229,7 +229,7 @@ def dashboard_content():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
-@app.route('/dahboard_heroes')
+@app.route('/dashboard_heroes')
 def dashboard_heroes():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -246,7 +246,7 @@ def dashboard_heroes():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
-@app.route('/dahboard_story')
+@app.route('/dashboard_hero_story')
 def dashboard_story():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -256,7 +256,7 @@ def dashboard_story():
             algorithms=['HS256']
         )
         if 'admin' in payload:
-            return render_template("dashboard_story.html", user_info=payload)
+            return render_template("dashboard_hero_story.html", user_info=payload)
         else:
             return redirect(url_for('/home', msg='You are not admin'))
     except jwt.ExpiredSignatureError:
@@ -272,35 +272,32 @@ def sign_in():
     email_receive = request.form["username_give"]
     password_receive = request.form["password_give"]
     pw_hash = hashlib.sha256(password_receive.encode("utf-8")).hexdigest()
+
     result = db.users.find_one({
-            "email": email_receive,
-            "password": pw_hash,
-        })
-    if result and 'admin' in result:
+        "email": email_receive,
+        "password": pw_hash,
+    })
+
+    if result:
         payload = {
             "id": email_receive,
             "username": result['username'],
-            "admin":True,
-            # the token will be valid for 24 hours
             "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
         }
+
+        if 'admin' in result:
+            payload["admin"] = True
+
+           
+            token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+            # Arahkan ke halaman dashboard jika admin berhasil login
+            return redirect(url_for('dashboard_hero_story'))
+
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return jsonify({"result": "success", "token": token,})
-    elif result and 'admin' not in result:
-        payload = {
-            "id": email_receive,
-            "username": result['username'],
-            # the token will be valid for 24 hours
-            "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
-        }
-        token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
-        return jsonify({"result": "success", "token": token,})
-        
-    # Let's also handle the case where the id and
-    # password combination cannot be found
-    else:
-        return jsonify({"result": "fail","msg": "We could not find a user with that id/password combination",
-            })
+        return jsonify({"result": "success", "token": token})
+    
+    return jsonify({"result": "failure", "message": "Invalid credentials"})
     
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
@@ -312,7 +309,7 @@ def sign_up():
         "username": username_receive,                               # id
         "email" : email_recive,                                     # email
         "password": password_hash,                                  # password
-        "roles":"user"
+        "roles":"user",
     }
     db.users.insert_one(doc)
     return jsonify({'result': 'success'})

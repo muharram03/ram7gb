@@ -25,16 +25,20 @@
         <div class="collapse navbar-collapse px-5" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="{{ 'nav-link active' if active_page == 'home' else 'nav-link' }}" aria-current="page" href="/home">Home</a>
+                    <a class="{{ 'nav-link active' if active_page == 'home' else 'nav-link' }}" aria-current="page"
+                        href="/home">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ 'nav-link active' if active_page == 'discussion' else 'nav-link' }}" href="/discussion">Discussion</a>
+                    <a class="{{ 'nav-link active' if active_page == 'discussion' else 'nav-link' }}"
+                        href="/discussion">Discussion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ 'nav-link active' if active_page == 'hero_story' else 'nav-link' }}" href="/hero_story">Story</a>
+                    <a class="{{ 'nav-link active' if active_page == 'hero_story' else 'nav-link' }}"
+                        href="/hero_story">Story</a>
                 </li>
                 <li class="nav-item">
-                    <a class="{{ 'nav-link active' if active_page == 'interactive_maps' else 'nav-link' }}" href="/interactive_maps">Interactive Maps</a>
+                    <a class="{{ 'nav-link active' if active_page == 'interactive_maps' else 'nav-link' }}"
+                        href="/interactive_maps">Interactive Maps</a>
                 </li>
                 </li>
             </ul>
@@ -82,7 +86,8 @@
         });
     }
 
-    function check_dup() {
+    function check_dup(event) {
+        event.preventDefault(); // Prevent the default submit behavior of the form
         let username = $("#email").val();
         console.log(username);
         $("#help-id").addClass("is-loading");
@@ -95,7 +100,7 @@
             success: function (response) {
                 console.log(response);
                 if (response["exists"]) {
-                    alert("Thats Email alredy exists");
+                    alert("Thats Email already exists");
                 } else {
                     alert("Thats Email not used");
                 }
@@ -151,7 +156,7 @@
                         <button class="btn btn-lg btn-primary" id="login-btn" onclick="sign_up()">
                             Sign Up
                         </button>
-                        <button class="btn btn-lg btn-primary" id="login-btn" onclick="check_dup()">
+                        <button class="btn btn-lg btn-primary" id="login-btn" onclick="check_dup(event)">
                             Check Email
                         </button>
                     </div>
@@ -167,9 +172,9 @@
 </body>
 <footer class="bg-white text-dark text-center py-3">
     <div class="container">
-      <p>&copy; 2023 ML Playbook. All rights reserved.</p>
+        <p>&copy; 2023 ML Playbook. All rights reserved.</p>
     </div>
-  </footer>
+</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
 </script>
