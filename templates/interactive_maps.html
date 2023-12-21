@@ -35,7 +35,7 @@
             <a class="{{ 'nav-link active' if active_page == 'interactive_maps' else 'nav-link' }}" href="/interactive_maps">Interactive Maps</a>
         </li>
         </li>
-      </ul>
+    </ul>
       {% if user_info.exp %}
       <div class="flex-shrink-0 dropdown ms-auto">
         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
@@ -45,10 +45,14 @@
         <ul class="dropdown-menu text-small shadow "
           style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
           data-popper-placement="bottom-end">
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#" onclick="sign_out()">Sign out</a></li>
+          <li><a class="dropdown-item" href="/mypost">My Post</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="sign_out()"
+                  >Sign out</a
+                >
         </ul>
       </div>
       {% else %}

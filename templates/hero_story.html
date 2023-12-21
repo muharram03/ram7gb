@@ -45,10 +45,14 @@
         <ul class="dropdown-menu text-small shadow "
           style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);"
           data-popper-placement="bottom-end">
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="#" onclick="sign_out()">Sign out</a></li>
+          <li><a class="dropdown-item" href="/mypost">My Post</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" onclick="sign_out()"
+                  >Sign out</a
+                >
         </ul>
       </div>
       {% else %}
@@ -67,7 +71,7 @@
   }
 </script>
 
-<body>
+<body style="background-color: rgba(0, 0, 255, 0.5);">
   <div class="container mt-3">
     <div>
       <h1 class="page-header__title" id="firstHeading">

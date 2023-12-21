@@ -2,7 +2,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: rgba(0, 0, 255, 0.5);
+  background: #ffffff;
 }
 
 .box-area {
@@ -29,7 +29,6 @@ body {
 .footer {
   width: 100%;
 }
-
 
 
 

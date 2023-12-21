@@ -1,4 +1,24 @@
-function post() {
+function check_dup() {
+    let username = $("#input-username").val();
+    console.log(username);
+    $("#help-id").addClass("is-loading");
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/check_dup",
+        data: {
+            username_give: username,
+        },
+        success: function (response) {
+            console.log(response);
+            if (response["exists"]) {
+                alert("Thats Email alredy exists");
+            } else {
+                alert("Thats Email not used");
+            }
+        },
+    });
+  }
+  function post() {
     let comment = $("#textarea-post").val();
     let today = new Date().toISOString();
     $.ajax({
@@ -98,7 +118,7 @@ function post() {
                                                                                                ]
                                                                                              )}</span>
                                                           </a>
-
+  
                                                           <a class="level-item is-sparta" aria-label="thumbsup" onclick="toggle_thumbsup('${
                                                             post["_id"]
                                                           }', 'thumbsup')">
@@ -199,7 +219,7 @@ function post() {
       },
     });
   }
-
+  
   function toggle_thumbsup(post_id, type) {
     console.log(post_id, type);
     let $a_like = $(`#${post_id} a[aria-label='thumbsup']`);
@@ -236,7 +256,7 @@ function post() {
       });
     }
   }
-
+  
   function toggle_star(post_id, type) {
     console.log(post_id, type);
     let $a_like = $(`#${post_id} a[aria-label='star']`);
