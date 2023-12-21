@@ -311,6 +311,10 @@ def sign_up():
         "username": username_receive,                               # id
         "email" : email_recive,                                     # email
         "password": password_hash,                                  # password
+        "profile_name": username_receive,                           # user's name is set to their id by default
+        "profile_pic": "",                                          # profile image file name
+        "profile_pic_real": "profile_pics/profile_placeholder.png", # a default profile image
+        "profile_info": "",                                          # a profile description
         "roles":"user",
     }
     db.users.insert_one(doc)
@@ -412,6 +416,21 @@ def get_posts():
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
         return redirect(url_for("home"))
 
+@app.route("/user/<username>")
+def user(username):
+    # an endpoint for retrieving a user's profile information
+    # and all of their posts
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        # if this is my own profile, True
+        # if this is somebody else's profile, False
+        status = username == payload["id"]  
+
+        user_info = db.users.find_one({"username": username}, {"_id": False})
+        return render_template("home.html", user_info=user_info, status=status)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 
