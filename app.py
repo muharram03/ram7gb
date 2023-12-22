@@ -450,11 +450,7 @@ def dashboard_story():
             SECRET_KEY,
             algorithms=['HS256']
         )
-        print(payload)
-        if 'admin' in payload:
-            return render_template("dashboard.html", user_info=payload)
-        else:
-            return redirect(url_for('/home', msg='You are not admin'))
+        return render_template("dashboard_hero_story.html" , active_page='dashboard_hero_story',user_info=payload,)
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
         return redirect(url_for('login', msg=msg))
@@ -534,6 +530,95 @@ def profile(keyword):
     except jwt.exceptions.DecodeError:
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
+    
+# hero_story
+    
+@app.route("/edit_story/<id>", methods=["POST"])
+def edit_story(id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        # Assuming 'db' is your MongoDB connection
+
+        # Make sure to use 'stories' collection name instead of 'story'
+        # Adjust the following line according to your actual collection name
+        user_info = db.stories.find_one({"_id": ObjectId(id), "username": payload["username"]})
+        if user_info:
+            heroes = request.form["hero"]
+            story = request.form["story"]
+            doc = {
+                "heroes": heroes,
+                "story": story
+            }
+
+            if 'icon' in request.files:
+                icon = request.files["icon"]
+                filename = secure_filename(icon.filename)
+                extension = filename.split(".")[-1]
+                file_path = f"profile_pics/{filename}.{extension}"
+                icon.save("./static/" + file_path)
+                doc["icon"] = file_path
+
+            # Use the correct collection name ('stories' in this case)
+            db.stories.update_one({"_id": ObjectId(id)}, {"$set": doc})
+            return jsonify({"result": "success", "msg": "Edit successful!"})
+        else:
+            # Handle case where the user does not have permission to edit
+            return jsonify({"result": "error", "msg": "Unauthorized access"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+@app.route("/hapus_story/<id>", methods=["POST"])
+def hapus_story(id):
+    token_receive = request.cookies.get("mytoken")
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
+        # We should create a new post here
+
+        db.story.delete_one({"_id": ObjectId(id)})
+        return jsonify({"result": "success", "msg": "Delete successful!"})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+
+@app.route('/tambah_story', methods=["POST"])
+def tambah_story():
+    token_receive = request.cookies.get(TOKEN_KEY)
+    icon = request.files["icon"]
+    heroes = request.form["hero"]
+    story = request.form["story"]
+    try:
+        payload = jwt.decode(
+            token_receive,
+            SECRET_KEY,
+            algorithms=['HS256']
+        )
+        doc = {
+            "heroes": heroes,
+            "story": story
+        }
+        filename = secure_filename(icon.filename)
+        extension = filename.split(".")[-1]
+        file_path = f"profile_pics/{filename}.{extension}"
+        icon.save("./static/" + file_path)
+        doc["icon"] = file_path
+
+        db.story.insert_one(doc)
+        return jsonify({"result": "success", "msg": "Heroes updated!"})
+    except jwt.ExpiredSignatureError:
+        msg = 'Your Token has expired'
+        return redirect(url_for('login', msg=msg))
+    except jwt.exceptions.DecodeError:
+        msg = ' There was a problem logging you in'
+        return redirect(url_for('login', msg=msg))
+    
+@app.route('/get_story')
+def get_story():
+    stories = list(db.story.find({}))
+    for story in stories:
+        story['_id'] = str(story['_id'])
+    return jsonify({"result": "success", "stories": stories})
+
+
 
 
 
