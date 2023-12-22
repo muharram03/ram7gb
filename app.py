@@ -361,7 +361,12 @@ def dashboard_discussion():
             SECRET_KEY,
             algorithms=['HS256']
         )
-        return render_template("dashboard_discussion.html" , active_page='dashboard_discussion',user_info=payload,)
+
+        # Check if the user has the "admin" role
+        if 'admin' in payload.get('roles', []):
+            return render_template("dashboard_discussion.html", active_page='dashboard_discussion', user_info=payload)
+        else:
+            return redirect(url_for('home', msg='You are not admin'))
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
         return redirect(url_for('login', msg=msg))
