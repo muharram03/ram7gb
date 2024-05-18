@@ -187,6 +187,26 @@ function check_dup() {
       });
     }
   }
+
+  function toggle_reply_form(post_id) {
+    $(`#reply-form-${post_id}`).toggle();
+  }
+  
+  function submit_reply(post_id) {
+    let reply = $(`#reply-textarea-${post_id}`).val();
+    $.ajax({
+        type: "POST",
+        url: `/posts/${post_id}/reply`,
+        data: {
+            reply_give: reply
+        },
+        success: function (response) {
+            if (response["result"] === "success") {
+                get_posts();
+            }
+        }
+    });
+  }
   
   function sign_out() {
     $.removeCookie("mytoken", { path: "/" });

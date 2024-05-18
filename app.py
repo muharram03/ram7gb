@@ -9,6 +9,7 @@ import hashlib
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+from pymongo import MongoClient
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -29,6 +30,7 @@ DB_NAME =  os.environ.get("DB_NAME")
 client = MongoClient(MONGODB_URI)
 
 db = client[DB_NAME]
+users_collection = db["users"]
 
 @app.route('/')
 def main():
@@ -163,43 +165,60 @@ def discussion():
         return redirect(url_for('login', msg=msg))
 
 
-@app.route("/posting", methods=["POST"])
+@app.route('/posting', methods=['POST'])
 def posting():
-    token_receive = request.cookies.get("mytoken")
+    token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-        print(payload)
-        # We should create a new post here
-        user_info = db.users.find_one({"username": payload["username"]})
-        comment_receive = request.form["comment_give"]
-        date_receive = request.form["date_give"]
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({'username': payload['username']})
+        comment_receive = request.form['comment_give']
+        date_receive = request.form['date_give']
         doc = {
-            "username": user_info["username"],
-            "comment": comment_receive,
-            "date": date_receive,
+            'username': user_info['username'],
+            'comment': comment_receive,
+            'date': date_receive,
+            'replies': []
         }
         db.posts.insert_one(doc)
-        return jsonify({"result": "success", "msg": "Posting successful!"})
+        return jsonify({'result': 'success', 'msg': 'Posting successful!'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+        return redirect(url_for('home'))
 
-
-@app.route("/edit/<id>", methods=["POST"])
+@app.route('/edit/<id>', methods=['POST'])
 def edit(id):
-    token_receive = request.cookies.get("mytoken")
+    token_receive = request.cookies.get('mytoken')
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-        # We should create a new post here
-        user_info = db.users.find_one({"username": payload["username"]})
-        username = user_info["username"]
-        comment_receive = request.form["comment_give"]
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({'username': payload['username']})
+        comment_receive = request.form['comment_give']
         doc = {
-            "comment": comment_receive,
+            'comment': comment_receive,
         }
-        result = db.posts.update_one({"_id": ObjectId(id)}, {"$set": doc})
-        return jsonify({"result": "success", "msg": "Posting successful!"})
+        db.posts.update_one({'_id': ObjectId(id)}, {'$set': doc})
+        return jsonify({'result': 'success', 'msg': 'Edit successful!'})
     except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+        return redirect(url_for('home'))
+
+@app.route('/posts/<id>/reply', methods=['POST'])
+def reply_post(id):
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({'username': payload['username']})
+        reply_receive = request.form['reply_give']
+        reply = {
+            'username': user_info['username'],
+            'comment': reply_receive,
+            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        }
+        db.posts.update_one({'_id': ObjectId(id)}, {'$push': {'replies': reply}})
+        return jsonify({'result': 'success', 'msg': 'Reply successful!'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(f"Error: {e}")  # Add logging here
+        return jsonify({'result': 'error', 'msg': str(e)})
+
 
 @app.route("/edit_heroes/<id>", methods=["POST"])
 def edit_heroes(id):
@@ -260,15 +279,8 @@ def get_posts():
     token_receive = request.cookies.get("mytoken")
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=["HS256"])
-
-        username_receive = request.args.get("username_give")
-        if username_receive == "":
-            posts = list(db.posts.find({}).sort("date", -1).limit(20))
-        else:
-            posts = list(
-                db.posts.find({"username": username_receive}).sort("date", -1).limit(20)
-            )
-
+        # We should fetch the full list of posts here
+        posts = list(db.posts.find({}).sort("date", -1).limit(20))
         for post in posts:
             post["_id"] = str(post["_id"])
             post["count_heart"] = db.likes.count_documents(
@@ -276,11 +288,10 @@ def get_posts():
             )
             post["count_star"] = db.likes.count_documents(
                 {"post_id": post["_id"], "type": "star"}
-            )            
+            )
             post["count_thumbsup"] = db.likes.count_documents(
                 {"post_id": post["_id"], "type": "thumbsup"}
-            )            
-            
+            )
             post["heart_by_me"] = bool(
                 db.likes.find_one(
                     {"post_id": post["_id"], "type": "heart", "username": payload["id"]}
@@ -296,7 +307,6 @@ def get_posts():
                     {"post_id": post["_id"], "type": "thumbsup", "username": payload["id"]}
                 )
             )
-
         return jsonify(
             {
                 "result": "success",
@@ -308,29 +318,13 @@ def get_posts():
         return redirect(url_for("home"))
 
 
+
 @app.route('/get_heroes')
 def get_heroes():
     heroes = list(db.heroes.find({}))
     for hero in heroes:
         hero['_id'] = str(hero['_id'])
     return jsonify({"result": "success", "heroes": heroes})
-
-@app.route('/discussion_reply')
-def reply():
-    token_receive = request.cookies.get(TOKEN_KEY)
-    try:
-        payload = jwt.decode(
-            token_receive,
-            SECRET_KEY,
-            algorithms=['HS256']
-        )
-        return render_template("skin.html" , active_page='skin',user_info=payload,)
-    except jwt.ExpiredSignatureError:
-        msg = 'Your Token has expired'
-        return redirect(url_for('login', msg=msg))
-    except jwt.exceptions.DecodeError:
-        msg = ' There was a problem logging you in'
-        return redirect(url_for('login', msg=msg))
 
 @app.route('/mypost')
 def mypost():
@@ -362,11 +356,7 @@ def dashboard_discussion():
             algorithms=['HS256']
         )
 
-        # Check if the user has the "admin" role
-        if 'admin' in payload.get('roles', []):
-            return render_template("dashboard_discussion.html", active_page='dashboard_discussion', user_info=payload)
-        else:
-            return redirect(url_for('home', msg='You are not admin'))
+        return render_template("dashboard_discussion.html" , active_page='dashboard_discussion',user_info=payload,)
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
         return redirect(url_for('login', msg=msg))
@@ -374,7 +364,7 @@ def dashboard_discussion():
         msg = ' There was a problem logging you in'
         return redirect(url_for('login', msg=msg))
 
-@app.route('/dahboard_content')
+@app.route('/dashboard_content')
 def dashboard_content():
     token_receive = request.cookies.get(TOKEN_KEY)
     try:
@@ -383,7 +373,7 @@ def dashboard_content():
             SECRET_KEY,
             algorithms=['HS256']
         )
-        return render_template("dashboard_content.html" , active_page='dashboard_content',user_info=payload,)
+        return render_template("dashboard_content_heroes.html" , active_page='dashboard_content_heroes',user_info=payload,)
     except jwt.ExpiredSignatureError:
         msg = 'Your Token has expired'
         return redirect(url_for('login', msg=msg))
@@ -477,7 +467,7 @@ def sign_in():
             "exp": datetime.utcnow() + timedelta(seconds=60 * 60 * 24),
         }
 
-        if result["roles"] == 'admin':
+        if "roles" in result and result["roles"] == 'admin':
             payload["admin"] = True
 
            
@@ -617,6 +607,36 @@ def get_story():
     for story in stories:
         story['_id'] = str(story['_id'])
     return jsonify({"result": "success", "stories": stories})
+
+@app.route('/accounts')
+def accounts():
+    users = list(users_collection.find())  # Fetch all user documents and convert to list
+    total_users = users_collection.count_documents({})  # Count total number of users
+    return render_template('accounts.html', users=users, total_users=total_users)
+
+@app.route('/update_like', methods=['POST'])
+def update_like():
+    try:
+        post_id = request.form['post_id']
+        action = request.form['action']
+        post = db.posts.find_one({'_id': ObjectId(post_id)})
+
+        if post:
+            if action == 'like':
+                db.posts.update_one(
+                    {'_id': ObjectId(post_id)},
+                    {'$inc': {'likes': 1}}
+                )
+            elif action == 'unlike':
+                db.posts.update_one(
+                    {'_id': ObjectId(post_id)},
+                    {'$inc': {'likes': -1}}
+                )
+            return jsonify({'result': 'success', 'msg': 'Like updated!'})
+        else:
+            return jsonify({'result': 'error', 'msg': 'Post not found'})
+    except Exception as e:
+        return jsonify({'result': 'error', 'msg': str(e)})
 
 
 
