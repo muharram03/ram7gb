@@ -637,8 +637,12 @@ def update_like():
             return jsonify({'result': 'error', 'msg': 'Post not found'})
     except Exception as e:
         return jsonify({'result': 'error', 'msg': str(e)})
-
-
+    
+@app.route('/total_posts')
+def total_posts():
+    posts = list(db.posts.find())  # Fetch all post documents and convert to list
+    total_posts = db.posts.count_documents({})  # Count total number of posts
+    return render_template('total_posts.html', posts=posts, total_posts=total_posts)
 
 
 
